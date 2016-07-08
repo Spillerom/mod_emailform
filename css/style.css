@@ -1,3 +1,16 @@
 body {
     background: red;
 }
+
+.nbjt-emailform-input {
+    width: 90%;
+}
+
+.nbjt-emailform-description {
+    text-transform: uppercase;
+    font-weight: 600;
+}
+    .nbjt-emailform-description span {
+        color: #c00
+    }
+
