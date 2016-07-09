@@ -1,6 +1,6 @@
 <?php
 /**
- * Hello World! Module Entry Point
+ * Email template Module Entry Point
  * 
  * @package    Joomla.Site
  * @subpackage mod_emailform
@@ -17,11 +17,11 @@ defined('_JEXEC') or die;
 
 // Include the syndicate functions only once
 require_once __DIR__ . '/helper.php';
- 
-$hello = ModEmailFormHelper::getHello($params);
 
+// 
 require JModuleHelper::getLayoutPath('mod_emailform');
 
+// 
 $document = JFactory::getDocument();
 
 

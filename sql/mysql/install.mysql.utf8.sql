@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `#__emailform` (
     `residencesize` varchar(255) NOT NULL,
     `message` text NOT NULL,
     `pagetitle` varchar(255) NOT NULL, 
-    `id` varchar(255) NOT NULL,
+    `ipaddress` varchar(255) NOT NULL,
     `browser` varchar(255) NOT NULL,
     `os` varchar(255) NOT NULL,
     `screenresolution` varchar(255) NOT NULL,

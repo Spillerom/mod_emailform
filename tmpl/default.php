@@ -3,10 +3,11 @@
 defined('_JEXEC') or die;
 
 // load jQuery, if not loaded before
+$doc = JFactory::getDocument();
 if (!JFactory::getApplication()->get('jquery')) {
     JFactory::getApplication()->set('jquery', true);
+    JHtml::_('jquery.framework');
 }
-    JHTML::script('modules/mod_emailform/js/jquery.min.js');
 
 // 
 JHTML::script('modules/mod_emailform/js/script.js');
