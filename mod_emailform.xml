@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.1.0" client="site" method="upgrade">
-    <name>mod_emailform</name>
+    <name>Email Form</name>
     <author>Ninja Boys</author>
     <version>1.0.0</version>
-    <description>A simple Email Form module.</description>
+    <description>A simple Email Form module that sends info about the user on submit.</description>
     <files>
         <filename>mod_emailform.xml</filename>
         <filename module="mod_emailform">mod_emailform.php</filename>
@@ -19,13 +19,11 @@
              <file driver="mysql" charset="utf8">sql/mysql/install.mysql.utf8.sql</file>
          </sql>
     </install>
-     
     <uninstall>
          <sql>
              <file driver="mysql" charset="utf8">sql/mysql/uninstall.mysql.utf8.sql</file>
          </sql>
     </uninstall>
-     
     <update> 
         <schemas>
             <schemapath type="mysql">sql/mysql/updates</schemapath> 

@@ -1,5 +1,6 @@
-body {
-    background: red;
+
+.nbjt-emailform-error {
+    color: #f00 !important;
 }
 
 .nbjt-emailform-input {
