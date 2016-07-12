@@ -142,6 +142,7 @@ class ModEmailFormHelper {
      * @param var 
      * @return variable value (if variable is set)
      */
+/*
     private static function GetPostVar($var) {
         // 
         if( !isset($_POST[$var] )) {
@@ -150,6 +151,7 @@ class ModEmailFormHelper {
             return $_POST[$var];
         }
     }
+*/
 
     /**
      * Insert form data into db..
@@ -157,18 +159,21 @@ class ModEmailFormHelper {
      * @return last db insert id
      */
     public static function storeFormData() {
-        $name = GetPostVar('name');
-        $email = GetPostVar('email');
-        $phone = GetPostVar('phone');
-        $postnumber = GetPostVar('postnumber');
-        $residencesize = GetPostVar('residencesize');
-        $message = GetPostVar('message');
-        $pagetitle = GetPostVar('pagetitle');
+        //$input = JFactory::getApplication()->input;
+        //$input->get('name');
+
+        $name = JRequest::getVar('name');
+        $email = JRequest::getVar('email');
+        $phone = JRequest::getVar('phone');
+        $postnumber = JRequest::getVar('postnumber');
+        $residencesize = JRequest::getVar('residencesize');
+        $message = JRequest::getVar('message');
+        $pagetitle = JRequest::getVar('pagetitle');
         $ipaddress = $_SERVER['REMOTE_ADDR'];
         $browser = getBrowser();
         $os = getOS();
-        $screenresolution = GetPostVar('screenresolution');
-        $referrerurl = GetPostVar('referrerurl');
+        $screenresolution = JRequest::getVar('screenresolution');
+        $referrerurl = JRequest::getVar('referrerurl');
 
         echo '{"status":"ok","insert_id": '.$id.',"message":"Takk for din henvendelse!"}';
 

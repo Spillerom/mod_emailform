@@ -80,7 +80,7 @@ jQuery(document).ready(function() {
             var referrerurl = document.referrerurl == undefined ? 'NULL' : document.referrerurl;
 
             // 
-            jQuery.post( "index.php?option=com_emailform&task=storeFormData", {
+            jQuery.post( "index.php?option=com_ajax&module=com_emailform&method=storeFormData", {
                 name: name,
                 email: email,
                 phone: phone,
