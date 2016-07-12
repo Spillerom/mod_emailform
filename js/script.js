@@ -2,17 +2,23 @@
 var validateFields = function() {
     //  
     var validateEmptyField = function(id) {
+        return true;
+/*
         if( jQuery(id).val() == '' ) {
             jQuery(id).addClass('nbjt-emailform-error');
             return false;
         }
         return true;
+*/
     }
 
     // 
     function validateEmail(email) {
+        return true;
+/*
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         return regex.test(email);
+*/
     }
     
     var retval = true;
@@ -80,7 +86,7 @@ jQuery(document).ready(function() {
             var referrerurl = document.referrerurl == undefined ? 'NULL' : document.referrerurl;
 
             // 
-            jQuery.post( "index.php?option=com_ajax&module=com_emailform&method=storeFormData", {
+            jQuery.post( "index.php?option=com_ajax&module=emailform&method=storeFormData&format=json", {
                 name: name,
                 email: email,
                 phone: phone,
@@ -105,7 +111,8 @@ jQuery(document).ready(function() {
                 } else {
                     jQuery('.nbjt-emailform-error').text(result.message);
                 }
-            }).fail(function() {
+            }).fail(function(result) {
+                console.log(result);
                 alert('En uventet feil har oppstått, venligst prøv igjen senere.');
             }).always(function() {
                 // 

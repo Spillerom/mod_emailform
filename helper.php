@@ -16,6 +16,28 @@ defined('_JEXEC') or die;
 class ModEmailFormHelper {
     //public static $user_agent;
 
+
+    // 
+    private static function sendMail($subject, $body, $to, $from) {
+        # Invoke JMail Class
+        $mailer = JFactory::getMailer();
+
+        # Set sender array so that my name will show up neatly in your inbox
+        $mailer->setSender($from);
+
+        # Add a recipient -- this can be a single address (string) or an array of addresses
+        $mailer->addRecipient($to);
+
+        $mailer->setSubject($subject);
+        $mailer->setBody($body);
+
+        # If you would like to send as HTML, include this line; otherwise, leave it out
+        $mailer->isHTML();
+
+        # Send once you have set all of your options
+        $mailer->send();
+    }
+
     /**
       * Insert form data into db..
       *
@@ -42,10 +64,10 @@ class ModEmailFormHelper {
         $query = $db->getQuery(true);
  
         // Insert columns.
-        $columns = array('name', 'email', 'phone', 'postnumber', 'residencesize', 'message', 'pagetitle', 'idaddress', 'browser', 'os', 'screenresolution', 'referrerurl');
+        $columns = array('name', 'email', 'phone', 'postnumber', 'residencesize', 'message', 'pagetitle', 'ipaddress', 'browser', 'os', 'screenresolution', 'referrerurl');
  
         // Insert values.
-        $values = array($name, $email, $phone, $postnumber, $residencesize, $message, $pagetitle, $ipaddress, $browser, $os, $screenresolution, $referrerurl);
+        $values = array($db->quote($name), $db->quote($email), $db->quote($phone), $db->quote($postnumber), $db->quote($residencesize), $db->quote($message), $db->quote($pagetitle), $db->quote($ipaddress), $db->quote($browser), $db->quote($os), $db->quote($screenresolution), $db->quote($referrerurl) );
  
         // Prepare the insert query.
         $query
@@ -137,31 +159,12 @@ class ModEmailFormHelper {
     }
 
     /**
-     * Get post variable
-     *
-     * @param var 
-     * @return variable value (if variable is set)
-     */
-/*
-    private static function GetPostVar($var) {
-        // 
-        if( !isset($_POST[$var] )) {
-            die('{"status":"error","message":"'.$var.' mangler. Alle feltene må være utfyllt."}');
-        } else {
-            return $_POST[$var];
-        }
-    }
-*/
-
-    /**
      * Insert form data into db..
      *
      * @return last db insert id
      */
-    public static function storeFormData() {
-        //$input = JFactory::getApplication()->input;
-        //$input->get('name');
-
+    public static function storeFormDataAjax() {
+        // 
         $name = JRequest::getVar('name');
         $email = JRequest::getVar('email');
         $phone = JRequest::getVar('phone');
@@ -170,18 +173,38 @@ class ModEmailFormHelper {
         $message = JRequest::getVar('message');
         $pagetitle = JRequest::getVar('pagetitle');
         $ipaddress = $_SERVER['REMOTE_ADDR'];
-        $browser = getBrowser();
-        $os = getOS();
+        $browser = ModEmailFormHelper::getBrowser();
+        $os = ModEmailFormHelper::getOS();
         $screenresolution = JRequest::getVar('screenresolution');
         $referrerurl = JRequest::getVar('referrerurl');
 
-        echo '{"status":"ok","insert_id": '.$id.',"message":"Takk for din henvendelse!"}';
-
         //
-        $id = ModEmailFormHelper::insertData($name, $email, $phone, $postnumber, $residencestyle, $message, $pagetitle, $ipaddress, $browser, $os, $screenresolution, $referrerurl);
+        $id = ModEmailFormHelper::insertData($name, $email, $phone, $postnumber, $residencesize, $message, $pagetitle, $ipaddress, $browser, $os, $screenresolution, $referrerurl);
+
+        $body = '';
+        $body .= '<br><br>';
+        $body .= 'Ticket: [#'.$id.']';
+        $body .= 'Navn: '.$name;
+        $body .= 'E-post: '.$email;
+        $body .= 'Telefon: '.$phone;
+        $body .= 'Postnummer: '.$postnumber;
+        $body .= 'Størrelse på din bolig: '.$residencesize;
+        $body .= 'Melding til oss: '.$message;
+        $body .= 'Sidetittel: '.$pagetitle;
+        $body .= 'ip-adresse: '.$ipaddress;
+        $body .= 'Nettleser: '.$browser;
+        $body .= 'Operativsystem: '.$os;
+        $body .= 'Skjermoppløsning: '.$screenresolution;
+        $body .= '<br><br>';
+
+        $to = $email;
+
+        //$from = array("post@pingvinklima.com", "General.no");
+        $from = "post@pingvinklima.com";
+        ModEmailFormHelper::sendMail("Uforpliktende tilbud", $body, $to, $from);
 
         // 
-        echo '{"status":"ok","insert_id": '.$id.',"message":"Takk for din henvendelse!"}';
+        die('{"status":"ok","message":"Takk for din henvendelse!"}');
 
     }
 }
