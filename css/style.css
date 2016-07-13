@@ -15,3 +15,16 @@
         color: #c00
     }
 
+.moduletable.jmoddiv {
+	background-color: #e8f5f6;
+}
+
+#nbjt-emailform-button {
+	background: #66a351;
+	padding: 0.5em;
+}
+
+.btn:hover {
+	background-color: #51a351;
+	background-position: 0 -30px;
+}
