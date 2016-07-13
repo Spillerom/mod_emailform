@@ -13,8 +13,43 @@
 
 defined('_JEXEC') or die;
 
+jimport( 'joomla.utilities.utility' );
+
 class ModEmailFormHelper {
-    //public static $user_agent;
+
+
+    function sendMail($from, $fromname, $recipient, $subject, $body, $mode=0, $cc=null, $bcc=null, $attachment=null, $replyto=null, $replytoname=null ) {
+        // Get a JMail instance
+        $mail =& JFactory::getMailer();
+ 
+        $mail->setSender(array($from, $fromname));
+        $mail->setSubject($subject);
+        $mail->setBody($body);
+ 
+        // Are we sending the email as HTML?
+        if ( $mode ) {
+                $mail->IsHTML(true);
+        }
+ 
+        $mail->addRecipient($recipient);
+        $mail->addCC($cc);
+        $mail->addBCC($bcc);
+        $mail->addAttachment($attachment);
+ 
+        // Take care of reply email addresses
+        if( is_array( $replyto ) ) {
+                $numReplyTo = count($replyto);
+                for ( $i=0; $i < $numReplyTo; $i++){
+                        $mail->addReplyTo( array($replyto[$i], $replytoname[$i]) );
+                }
+        } elseif( isset( $replyto ) ) {
+                $mail->addReplyTo( array( $replyto, $replytoname ) );
+        }
+ 
+        return  $mail->Send();
+    }
+/*
+
 
 
     // 
@@ -32,12 +67,12 @@ class ModEmailFormHelper {
         $mailer->setBody($body);
 
         # If you would like to send as HTML, include this line; otherwise, leave it out
-        $mailer->isHTML();
+        $mailer->isHTML(true);
 
         # Send once you have set all of your options
         $mailer->send();
     }
-
+*/
     /**
       * Insert form data into db..
       *
@@ -201,11 +236,12 @@ class ModEmailFormHelper {
 
         //$from = array("post@pingvinklima.com", "General.no");
         $from = "post@pingvinklima.com";
-        ModEmailFormHelper::sendMail("Uforpliktende tilbud", $body, $to, $from);
+
+        // 
+        ModEmailFormHelper::sendMail($from, 'General.no', $to, 'Uforpliktende tilbud' );
 
         // 
         die('{"status":"ok","message":"Takk for din henvendelse!"}');
-
     }
 }
 

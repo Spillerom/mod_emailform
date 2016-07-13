@@ -1,24 +1,21 @@
-// Validate if all fields are filled out
+
+/*
+ *  Validate if all fields are filled out
+ */
 var validateFields = function() {
     //  
     var validateEmptyField = function(id) {
-        return true;
-/*
         if( jQuery(id).val() == '' ) {
             jQuery(id).addClass('nbjt-emailform-error');
             return false;
         }
         return true;
-*/
     }
 
     // 
     function validateEmail(email) {
-        return true;
-/*
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         return regex.test(email);
-*/
     }
     
     var retval = true;
@@ -63,9 +60,9 @@ var validateFields = function() {
     return retval;
 }
 
-
-
-// 
+/*
+ * Ready when you are!
+ */
 jQuery(document).ready(function() {
     // Reset error-class on keypress:
     jQuery('input').keypress(function() {
